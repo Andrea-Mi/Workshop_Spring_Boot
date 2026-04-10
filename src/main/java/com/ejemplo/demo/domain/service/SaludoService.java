@@ -14,15 +14,22 @@ public class SaludoService {
         return new SaludoResponse(mensaje, Instant.now());
     }
 
-    /*
-    PASO 4 (EJERCICIO):
-    - Modifica esta logica para personalizar el formato del nombre.
-    - Ideas:
-      1) Primera letra mayuscula y resto minuscula.
-      2) Rechazar nombres con numeros.
-      3) Agregar prefijo "Estudiante".
-    */
     String normalizarNombre(String nombre) {
-        return nombre == null ? "Mundo" : nombre.trim();
+        // Validar null o vacío
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new IllegalArgumentException("El nombre no puede estar vacío");
+        }
+        
+        // Quitar espacios al inicio y final
+        String nombreLimpio = nombre.trim();
+        
+        // Validar que no contenga números (opcional pero recomendado)
+        if (nombreLimpio.matches(".*\\d.*")) {
+            throw new IllegalArgumentException("El nombre no puede contener números");
+        }
+        
+        // Primera letra mayúscula, resto minúsculas
+        return nombreLimpio.substring(0, 1).toUpperCase() 
+             + nombreLimpio.substring(1).toLowerCase();
     }
 }
